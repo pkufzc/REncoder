@@ -1,0 +1,11 @@
+all:run_workload run_workload_simd test BL_workload BL_workload_simd
+run_workload: run_workload.cpp
+	g++ -o run_workload run_workload.cpp -mcmodel=medium -march=native -mavx512f -O2
+run_workload_simd: run_workload.cpp
+	g++ -o run_workload_simd run_workload.cpp -mcmodel=medium -march=native -mavx512f -O2 -DUSE_SIMD
+test: test.cpp
+	g++ -o test test.cpp -mcmodel=medium -march=native -mavx512f -O2 -DUSE_SIMD
+BL_workload : BL_workload.cpp
+	g++ -o BL_workload BL_workload.cpp -mcmodel=medium -march=native -mavx512f -O2 
+BL_workload_simd : BL_workload.cpp
+	g++ -o BL_workload_simd BL_workload.cpp -mcmodel=medium -march=native -mavx512f -O2 -DUSE_SIMD 
